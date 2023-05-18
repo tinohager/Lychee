@@ -2,10 +2,12 @@
 
 namespace App\Legacy;
 
-use App\Models\Logs;
+use App\Metadata\Versions\InstalledVersion;
+use App\Models\Configs;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminAuthentication
 {
@@ -30,11 +32,45 @@ class AdminAuthentication
 		// Admin User exists, so we check against it.
 		if ($adminUser !== null && Hash::check($username, $adminUser->username) && Hash::check($password, $adminUser->password)) {
 			Auth::login($adminUser);
-			Logs::notice(__METHOD__, __LINE__, 'User (' . $username . ') has logged in from ' . $ip);
+			Log::channel('login')->notice(__METHOD__ . ':' . __LINE__ . ' User (' . $username . ') has logged in from ' . $ip);
 
 			// update the admin username so we do not need to go through here anymore.
 			$adminUser->username = $username;
 			$adminUser->save();
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * This is only applicable if we are up to version 4.0.8 in which the refactoring of admin append.
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param string $ip
+	 *
+	 * @return bool
+	 *
+	 * @codeCoverageIgnore
+	 */
+	public static function logAsAdminFromConfig(string $username, string $password, string $ip): bool
+	{
+		$username_hash = Configs::getValueAsString('username');
+		$password_hash = Configs::getValueAsString('password');
+
+		if (Hash::check($username, $username_hash) && Hash::check($password, $password_hash)) {
+			// Prior version 4.6.3 we are using ID 0 as admin
+			// We create admin at ID 0 because the 2022_12_10_183251_increment_user_i_ds will be taking care to push it to 1.
+			/** @var User $adminUser */
+			$adminUser = User::query()->findOrNew(0);
+			$adminUser->username = $username;
+			$adminUser->password = Hash::make($password);
+			$adminUser->save();
+
+			Auth::login($adminUser);
+			Log::channel('login')->notice(__METHOD__ . ':' . __LINE__ . ' User (' . $username . ') has logged in from ' . $ip . ' (legacy)');
 
 			return true;
 		}
