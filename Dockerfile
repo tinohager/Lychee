@@ -51,6 +51,10 @@ COPY composer.lock .
 
 RUN composer install --no-scripts --no-autoloader
 
+run mkdir -p ./storage/logs && \
+    chown -R www-data:www-data ./storage/logs && \
+    chmod -R 775 ./storage/logs
+
 COPY . .
 
 RUN composer dump-autoload --optimize && \
@@ -58,14 +62,7 @@ RUN composer dump-autoload --optimize && \
 
 run ./artisan migrate
 
-RUN chown -R www-data:www-data /var/www/html/Lychee/storage/logs && \
-    chmod -R 775 /var/www/html/Lychee/storage/logs
-
-EXPOSE 8080
-
-CMD apachectl -D FOREGROUND
-
-# run ./vendor/bin/phpunit --verbose --stop-on-failure
+run ./vendor/bin/phpunit --stop-on-failure
 
 # RUN \
 #     cd /var/www/html && \
