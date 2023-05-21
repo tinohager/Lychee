@@ -13,19 +13,24 @@ RUN \
     apt-get upgrade -qy && \
     apt-get install -qy --no-install-recommends\
     adduser \
-    php8.1-cli \
-    php8.1-mysql \
-    php8.1-pgsql \
-    php8.1-sqlite3 \
-    php8.1-imagick \
-    php8.1-mbstring \
-    php8.1-gd \
-    php8.1-xml \
-    php8.1-zip \
-    php8.1-fpm \
-    php8.1-redis \
-    php8.1-bcmath \
-    php8.1-intl \
+    apache2 \
+    php8.2 \
+    php8.2-bcmath \
+    php8.2-cli \
+    php8.2-common \
+    php8.2-curl \
+    php8.2-gd \
+    php8.2-imagick \
+    php8.2-mbstring \
+    php8.2-mysql \
+    php8.2-opcache \
+    php8.2-pgsql \
+    php8.2-readline \
+    php8.2-sqlite3 \
+    php8.2-xml \
+    php8.2-zip \
+    libapache2-mod-php8.2 \
+    php-common \
     curl \
     libimage-exiftool-perl \
     ffmpeg \
@@ -53,7 +58,15 @@ RUN composer dump-autoload --optimize && \
 
 run ./artisan migrate
 
-run ./vendor/bin/phpunit --verbose --stop-on-failure
+RUN chown -R www-data:www-data /var/www/html/Lychee/storage/logs && \
+    chmod -R 775 /var/www/html/Lychee/storage/logs
+
+EXPOSE 8080
+
+CMD apachectl -D FOREGROUND
+
+# run ./vendor/bin/phpunit --verbose --stop-on-failure
+
 # RUN \
 #     cd /var/www/html && \
 #     if [ "$TARGET" = "release" ] ; then RELEASE_TAG="-b v$(curl -s https://raw.githubusercontent.com/LycheeOrg/Lychee/master/version.md)" ; fi && \
