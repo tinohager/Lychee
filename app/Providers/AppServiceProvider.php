@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\InstallUpdate\CheckUpdate;
+use App\Assets\ArrayToTextTable;
 use App\Assets\Helpers;
 use App\Assets\SizeVariantGroupedWithRandomSuffixNamingStrategy;
 use App\Contracts\Models\AbstractSizeVariantNamingStrategy;
@@ -23,12 +24,14 @@ use App\Policies\AlbumQueryPolicy;
 use App\Policies\PhotoQueryPolicy;
 use App\Policies\SettingsPolicy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Safe\Exceptions\StreamException;
 use function Safe\stream_filter_register;
@@ -88,10 +91,7 @@ class AppServiceProvider extends ServiceProvider
 		JsonResource::withoutWrapping();
 
 		if (config('database.db_log_sql', false) === true) {
-			DB::listen(function ($query) {
-				$msg = $query->sql . ' [' . implode(', ', $query->bindings) . ']';
-				Log::debug($msg);
-			});
+			DB::listen(fn ($q) => $this->logSQL($q));
 		}
 
 		try {

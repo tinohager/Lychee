@@ -257,7 +257,9 @@ class AlbumQueryPolicy
 		// such that there are no blocked albums on the path to the album.
 		return $query->whereNotExists(function (BaseBuilder $q) {
 			$this->appendUnreachableAlbumsCondition(
-				$q, null, null,
+				$q,
+				null,
+				null,
 			);
 		});
 	}
