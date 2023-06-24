@@ -168,6 +168,7 @@ class AppServiceProvider extends ServiceProvider
 		// Quick exit
 		if (
 			Str::contains(request()->getRequestUri(), 'logs', true)
+			|| Str::contains($query->sql, $this->ignore_log_SQL)
 		) {
 			return;
 		}
@@ -179,7 +180,6 @@ class AppServiceProvider extends ServiceProvider
 		if (config('database.default', 'mysql') !== 'mysql'
 			|| config('database.explain', false) === false
 			|| !Str::contains($query->sql, 'select')
-			|| Str::contains($query->sql, $this->ignore_log_SQL)
 		) {
 			Log::debug($msg);
 
