@@ -136,7 +136,8 @@ class AlbumPolicy extends BasePolicy
 		if ($abstractAlbum instanceof BaseAlbum) {
 			return $this->isOwner($user, $abstractAlbum)
 				|| $abstractAlbum->grants_download
-				|| ($abstractAlbum->shared_with()->where('user_id', '=', $user?->id)->count() > 0 && $default);
+				;
+				// || ($abstractAlbum->shared_with()->where('user_id', '=', $user?->id)->count() > 0 && $default);
 		}
 
 		return false;
