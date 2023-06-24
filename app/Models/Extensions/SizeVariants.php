@@ -44,7 +44,7 @@ class SizeVariants extends AbstractDTO
 	 *                                        collection of size variants don't
 	 *                                        belong together
 	 */
-	public function __construct(Photo $photo, ?Collection $sizeVariants = null)
+	public function __construct(Photo $photo, Collection $sizeVariants = null)
 	{
 		$this->photo = $photo;
 		if ($sizeVariants !== null) {

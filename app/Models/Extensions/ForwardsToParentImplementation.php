@@ -302,10 +302,10 @@ trait ForwardsToParentImplementation
 		// Otherwise, we will proceed as if the developers
 		// are asking for a relationship's value. This covers both types of values.
 		if (
-			array_key_exists($key, $this->attributes) ||
-			array_key_exists($key, $this->casts) ||
-			$this->hasGetMutator($key) ||
-			$this->isClassCastable($key)
+			array_key_exists($key, $this->attributes)
+			|| array_key_exists($key, $this->casts)
+			|| $this->hasGetMutator($key)
+			|| $this->isClassCastable($key)
 		) {
 			return $this->getAttributeValue($key);
 		}
@@ -328,8 +328,8 @@ trait ForwardsToParentImplementation
 		// it is a relationship and will load and return results from the query
 		// and hydrate the relationship's value on the "relationships" array.
 		if (
-			method_exists($this, $key) ||
-			(static::$relationResolvers[get_class($this)][$key] ?? null)
+			method_exists($this, $key)
+			|| (static::$relationResolvers[get_class($this)][$key] ?? null)
 		) {
 			return $this->getRelationshipFromMethod($key);
 		}
@@ -403,8 +403,8 @@ trait ForwardsToParentImplementation
 		// it is a relationship and will load and return results from the query
 		// and hydrate the relationship's value on the "relationships" array.
 		if (
-			method_exists($this, $key) ||
-			(static::$relationResolvers[get_class($this)][$key] ?? null)
+			method_exists($this, $key)
+			|| (static::$relationResolvers[get_class($this)][$key] ?? null)
 		) {
 			return $this->getRelationshipFromMethod($key);
 		}
@@ -480,8 +480,8 @@ trait ForwardsToParentImplementation
 		// we write it to the child class.
 		$baseClass = $this->base_class;
 		if (
-			array_key_exists($key, $baseClass->getAttributes()) ||
-			$baseClass->hasSetMutator($key)
+			array_key_exists($key, $baseClass->getAttributes())
+			|| $baseClass->hasSetMutator($key)
 		) {
 			$baseClass->setAttribute($key, $value);
 		} else {

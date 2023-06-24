@@ -38,7 +38,7 @@ class SizeVariantDefaultFactory implements SizeVariantFactory
 	/**
 	 * {@inheritDoc}
 	 */
-	public function init(Photo $photo, ?ImageHandlerInterface $referenceImage = null, ?AbstractSizeVariantNamingStrategy $namingStrategy = null): void
+	public function init(Photo $photo, ImageHandlerInterface $referenceImage = null, AbstractSizeVariantNamingStrategy $namingStrategy = null): void
 	{
 		try {
 			$this->photo = $photo;

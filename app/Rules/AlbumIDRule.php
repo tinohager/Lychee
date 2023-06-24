@@ -23,9 +23,9 @@ class AlbumIDRule implements ValidationRule
 	public function passes(string $attribute, mixed $value): bool
 	{
 		return
-			($value === null && $this->isNullable) ||
-			strlen($value) === RandomID::ID_LENGTH ||
-			SmartAlbumType::tryFrom($value) !== null;
+			($value === null && $this->isNullable)
+			|| strlen($value) === RandomID::ID_LENGTH
+			|| SmartAlbumType::tryFrom($value) !== null;
 	}
 
 	/**

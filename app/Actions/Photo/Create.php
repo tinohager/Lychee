@@ -56,7 +56,7 @@ class Create
 	 * @throws ModelNotFoundException
 	 * @throws LycheeException
 	 */
-	public function add(NativeLocalFile $sourceFile, ?AbstractAlbum $album = null): Photo
+	public function add(NativeLocalFile $sourceFile, AbstractAlbum $album = null): Photo
 	{
 		$sourceFile->assertIsSupportedMediaOrAcceptedRaw();
 
@@ -129,8 +129,8 @@ class Create
 
 		// Use basename of file if IPTC title missing
 		if (
-			$this->strategyParameters->exifInfo->title === null ||
-			$this->strategyParameters->exifInfo->title === ''
+			$this->strategyParameters->exifInfo->title === null
+			|| $this->strategyParameters->exifInfo->title === ''
 		) {
 			$this->strategyParameters->exifInfo->title = substr($sourceFile->getOriginalBasename(), 0, 98);
 		}
@@ -173,8 +173,8 @@ class Create
 			// different kind then the uploaded media.
 			if (
 				$livePartner !== null && !(
-					BaseMediaFile::isSupportedImageMimeType($mimeType) && $livePartner->isVideo() ||
-					BaseMediaFile::isSupportedVideoMimeType($mimeType) && $livePartner->isPhoto()
+					BaseMediaFile::isSupportedImageMimeType($mimeType) && $livePartner->isVideo()
+					|| BaseMediaFile::isSupportedVideoMimeType($mimeType) && $livePartner->isPhoto()
 				)
 			) {
 				$livePartner = null;
@@ -201,7 +201,7 @@ class Create
 	 *
 	 * @throws InvalidPropertyException
 	 */
-	protected function initParentAlbum(?AbstractAlbum $album = null): void
+	protected function initParentAlbum(AbstractAlbum $album = null): void
 	{
 		if ($album === null) {
 			$this->strategyParameters->album = null;

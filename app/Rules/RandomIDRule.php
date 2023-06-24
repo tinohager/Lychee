@@ -24,8 +24,8 @@ class RandomIDRule implements ValidationRule
 	{
 		return
 			(
-				$value === null &&
-				$this->isNullable
+				$value === null
+				&& $this->isNullable
 			) || preg_match('/^[-_a-zA-Z0-9]{' . RandomID::ID_LENGTH . '}$/', $value) === 1;
 	}
 

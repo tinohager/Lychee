@@ -187,7 +187,7 @@ class IndexController extends Controller
 	 * @throws ConfigurationKeyMissingException
 	 * @throws ModelDBException
 	 */
-	protected function frontend(?string $title = null, ?string $description = null, ?string $imageUrl = null): View
+	protected function frontend(string $title = null, string $description = null, string $imageUrl = null): View
 	{
 		try {
 			$this->symLinkFunctions->remove_outdated();

@@ -43,9 +43,9 @@ class PhotoResource extends JsonResource
 		if ($size_variants instanceof MissingValue) {
 			$size_variants = null;
 		}
-		$downgrade = !Gate::check(PhotoPolicy::CAN_ACCESS_FULL_PHOTO, [Photo::class, $this->resource]) &&
-			!$this->resource->isVideo() &&
-			$size_variants?->hasMedium() === true;
+		$downgrade = !Gate::check(PhotoPolicy::CAN_ACCESS_FULL_PHOTO, [Photo::class, $this->resource])
+			&& !$this->resource->isVideo()
+			&& $size_variants?->hasMedium() === true;
 
 		$medium = $size_variants?->getSizeVariant(SizeVariantType::MEDIUM);
 		$medium2x = $size_variants?->getSizeVariant(SizeVariantType::MEDIUM2X);

@@ -126,8 +126,8 @@ class SizeVariant extends Model
 		$imageDisk = AbstractSizeVariantNamingStrategy::getImageDisk();
 
 		if (
-			(Auth::user()?->may_administrate === true && !Configs::getValueAsBool('SL_for_admin')) ||
-			!Configs::getValueAsBool('SL_enable')
+			(Auth::user()?->may_administrate === true && !Configs::getValueAsBool('SL_for_admin'))
+			|| !Configs::getValueAsBool('SL_enable')
 		) {
 			return $imageDisk->url($this->short_path);
 		}

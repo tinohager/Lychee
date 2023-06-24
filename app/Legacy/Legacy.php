@@ -21,8 +21,8 @@ class Legacy
 		$modernIDRule = new RandomIDRule(true);
 		$legacyIDRule = new IntegerIDRule(false);
 
-		return !$modernIDRule->passes('id', $id) &&
-			$legacyIDRule->passes('id', $id);
+		return !$modernIDRule->passes('id', $id)
+			&& $legacyIDRule->passes('id', $id);
 	}
 
 	/**

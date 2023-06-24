@@ -28,11 +28,11 @@ class StringRule implements ValidationRule
 	 */
 	public function passes(string $attribute, mixed $value): bool
 	{
-		return ($value === null &&
-			$this->isNullable
-		) || (is_string($value) &&
-			strlen($value) !== 0 &&
-			($this->limit === 0 || strlen($value) <= $this->limit)
+		return ($value === null
+			&& $this->isNullable
+		) || (is_string($value)
+			&& strlen($value) !== 0
+			&& ($this->limit === 0 || strlen($value) <= $this->limit)
 		);
 	}
 

@@ -259,8 +259,8 @@ abstract class BaseMediaFile extends AbstractBinaryBlob implements MediaFile
 	public static function isSupportedFileExtension(string $extension): bool
 	{
 		return
-			self::isSupportedImageFileExtension($extension) ||
-			self::isSupportedVideoFileExtension($extension);
+			self::isSupportedImageFileExtension($extension)
+			|| self::isSupportedVideoFileExtension($extension);
 	}
 
 	/**
@@ -307,8 +307,8 @@ abstract class BaseMediaFile extends AbstractBinaryBlob implements MediaFile
 	public static function isSupportedOrAcceptedFileExtension(string $extension): bool
 	{
 		return
-			self::isSupportedFileExtension($extension) ||
-			self::isAcceptedRawFileExtension($extension);
+			self::isSupportedFileExtension($extension)
+			|| self::isAcceptedRawFileExtension($extension);
 	}
 
 	/**

@@ -18,8 +18,8 @@ class ArtisanKeyGenerate extends AbstractUpdateInstallerPipe
 
 		// Always false on CICD
 		if (
-			!str_contains(end($output), 'Application key set successfully') ||
-			config('app.key') === null
+			!str_contains(end($output), 'Application key set successfully')
+			|| config('app.key') === null
 		) {
 			// @codeCoverageIgnoreStart
 			$output[] = 'We could not generate the encryption key.';

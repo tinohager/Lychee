@@ -105,19 +105,19 @@ abstract class BaseSharingTestScenarios extends BaseSharingTest
 	}
 
 	abstract protected function generateExpectedRootJson(
-		?string $unsortedAlbumThumbID = null,
-		?string $starredAlbumThumbID = null,
-		?string $publicAlbumThumbID = null,
-		?string $recentAlbumThumbID = null,
-		?string $onThisDayAlbumThumbID = null,
+		string $unsortedAlbumThumbID = null,
+		string $starredAlbumThumbID = null,
+		string $publicAlbumThumbID = null,
+		string $recentAlbumThumbID = null,
+		string $onThisDayAlbumThumbID = null,
 		array $expectedAlbumJson = []
 	): array;
 
 	abstract protected function generateUnexpectedRootJson(
-		?string $unsortedAlbumThumbID = null,
-		?string $starredAlbumThumbID = null,
-		?string $publicAlbumThumbID = null,
-		?string $recentAlbumThumbID = null,
+		string $unsortedAlbumThumbID = null,
+		string $starredAlbumThumbID = null,
+		string $publicAlbumThumbID = null,
+		string $recentAlbumThumbID = null,
 	): ?array;
 
 	abstract protected function generateExpectedTreeJson(array $expectedAlbums = []): array;

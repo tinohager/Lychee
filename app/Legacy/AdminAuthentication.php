@@ -2,7 +2,6 @@
 
 namespace App\Legacy;
 
-use App\Metadata\Versions\InstalledVersion;
 use App\Models\Configs;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;

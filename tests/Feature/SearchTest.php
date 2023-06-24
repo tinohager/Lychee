@@ -329,7 +329,7 @@ class SearchTest extends BasePhotoTest
 	protected function runSearch(
 		string $term,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->postJson(
 			'/api/Search::run',

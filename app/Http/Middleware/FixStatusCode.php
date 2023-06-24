@@ -36,9 +36,9 @@ class FixStatusCode
 		// Hence, we must not overwrite the status code with 204 for those
 		// kinds of responses.
 		if (
-			($content === false || $content === '') &&
-			!($response instanceof BinaryFileResponse) &&
-			!($response instanceof StreamedResponse)
+			($content === false || $content === '')
+			&& !($response instanceof BinaryFileResponse)
+			&& !($response instanceof StreamedResponse)
 		) {
 			$response->setStatusCode(Response::HTTP_NO_CONTENT);
 		}

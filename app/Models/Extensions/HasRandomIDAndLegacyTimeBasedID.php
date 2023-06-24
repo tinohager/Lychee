@@ -155,8 +155,8 @@ trait HasRandomIDAndLegacyTimeBasedID
 		}
 
 		if (
-			PHP_INT_MAX === 2147483647 ||
-			Configs::getValueAsBool('force_32bit_ids')
+			PHP_INT_MAX === 2147483647
+			|| Configs::getValueAsBool('force_32bit_ids')
 		) {
 			// For 32-bit installations, we can only afford to store the
 			// full seconds in id.  The calling code needs to be able to

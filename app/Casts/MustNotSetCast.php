@@ -27,7 +27,7 @@ class MustNotSetCast implements CastsInboundAttributes
 	 *                                 the name of the alternative is included
 	 *                                 into the exception message
 	 */
-	public function __construct(?string $alternative = null)
+	public function __construct(string $alternative = null)
 	{
 		$this->alternative = $alternative;
 	}

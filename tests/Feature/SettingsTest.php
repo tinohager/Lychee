@@ -27,7 +27,7 @@ class SettingsTest extends AbstractTestCase
 		string $url,
 		array $params,
 		int $status = 204,
-		?string $assertSee = null): void
+		string $assertSee = null): void
 	{
 		Auth::loginUsingId(1);
 
@@ -46,7 +46,7 @@ class SettingsTest extends AbstractTestCase
 		string $key,
 		string|bool|int $value,
 		int $status = 204,
-		?string $assertSee = null): void
+		string $assertSee = null): void
 	{
 		$oldVal = Configs::getValue($key);
 		Auth::loginUsingId(1);

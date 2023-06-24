@@ -176,10 +176,10 @@ class AppServiceProvider extends ServiceProvider
 		$msg = '(' . $query->time . 'ms) ' . $query->sql . ' [' . implode(', ', $query->bindings) . ']';
 
 		// For pgsql and sqlite we log the query and exit early
-		if (config('database.default', 'mysql') !== 'mysql' ||
-			config('database.explain', false) === false ||
-			!Str::contains($query->sql, 'select') ||
-			Str::contains($query->sql, $this->ignore_log_SQL)
+		if (config('database.default', 'mysql') !== 'mysql'
+			|| config('database.explain', false) === false
+			|| !Str::contains($query->sql, 'select')
+			|| Str::contains($query->sql, $this->ignore_log_SQL)
 		) {
 			Log::debug($msg);
 

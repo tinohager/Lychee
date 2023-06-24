@@ -55,8 +55,8 @@ class AlbumPolicy extends BasePolicy
 	 */
 	public function canSee(?User $user, BaseSmartAlbum $smartAlbum): bool
 	{
-		return ($user?->may_upload === true) ||
-			$smartAlbum->is_public;
+		return ($user?->may_upload === true)
+			|| $smartAlbum->is_public;
 	}
 
 	/**
@@ -96,10 +96,10 @@ class AlbumPolicy extends BasePolicy
 		if ($album instanceof BaseAlbum) {
 			try {
 				return
-					$this->isOwner($user, $album) ||
-					($album->is_public && $album->password === null) ||
-					($album->is_public && $this->isUnlocked($album)) ||
-					($album->is_shared_with_current_user);
+					$this->isOwner($user, $album)
+					|| ($album->is_public && $album->password === null)
+					|| ($album->is_public && $this->isUnlocked($album))
+					|| ($album->is_shared_with_current_user);
 			} catch (\InvalidArgumentException $e) {
 				throw LycheeAssertionError::createFromUnexpectedException($e);
 			}
@@ -134,9 +134,9 @@ class AlbumPolicy extends BasePolicy
 		}
 
 		if ($abstractAlbum instanceof BaseAlbum) {
-			return $this->isOwner($user, $abstractAlbum) ||
-				$abstractAlbum->grants_download ||
-				($abstractAlbum->shared_with()->where('user_id', '=', $user?->id)->count() > 0 && $default);
+			return $this->isOwner($user, $abstractAlbum)
+				|| $abstractAlbum->grants_download
+				|| ($abstractAlbum->shared_with()->where('user_id', '=', $user?->id)->count() > 0 && $default);
 		}
 
 		return false;
@@ -152,7 +152,7 @@ class AlbumPolicy extends BasePolicy
 	 *
 	 * @throws ConfigurationKeyMissingException
 	 */
-	public function canUpload(User $user, ?AbstractAlbum $abstractAlbum = null): bool
+	public function canUpload(User $user, AbstractAlbum $abstractAlbum = null): bool
 	{
 		if (!$user->may_upload) {
 			return false;
@@ -160,9 +160,9 @@ class AlbumPolicy extends BasePolicy
 
 		// The upload right on the root album is directly determined by the user's capabilities.
 		return
-			$abstractAlbum === null ||
-			$abstractAlbum instanceof BaseSmartAlbum ||
-			(($abstractAlbum instanceof BaseAlbum) && $this->isOwner($user, $abstractAlbum));
+			$abstractAlbum === null
+			|| $abstractAlbum instanceof BaseSmartAlbum
+			|| (($abstractAlbum instanceof BaseAlbum) && $this->isOwner($user, $abstractAlbum));
 	}
 
 	/**
@@ -197,9 +197,9 @@ class AlbumPolicy extends BasePolicy
 
 		// The root album and smart albums get a pass
 		return
-			$album === null ||
-			$album instanceof BaseSmartAlbum ||
-			(($album instanceof BaseAlbum) && $this->isOwner($user, $album));
+			$album === null
+			|| $album instanceof BaseSmartAlbum
+			|| (($album instanceof BaseAlbum) && $this->isOwner($user, $album));
 	}
 
 	/**
@@ -237,8 +237,8 @@ class AlbumPolicy extends BasePolicy
 		);
 
 		return
-			count($albumIDs) === 0 ||
-			BaseAlbumImpl::query()
+			count($albumIDs) === 0
+			|| BaseAlbumImpl::query()
 			->whereIn('id', $albumIDs)
 			->where('owner_id', $user->id)
 			->count() === count($albumIDs);

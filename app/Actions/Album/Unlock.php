@@ -33,9 +33,9 @@ class Unlock extends Action
 	{
 		if ($album->is_public) {
 			if (
-				$album->password === null ||
-				$album->password === '' ||
-				$this->albumPolicy->isUnlocked($album)
+				$album->password === null
+				|| $album->password === ''
+				|| $this->albumPolicy->isUnlocked($album)
 			) {
 				return;
 			}

@@ -326,11 +326,11 @@ abstract class BaseSharingWithNonAdminUser extends BaseSharingTestScenarios
 	}
 
 	protected function generateExpectedRootJson(
-		?string $unsortedAlbumThumbID = null,
-		?string $starredAlbumThumbID = null,
-		?string $publicAlbumThumbID = null,
-		?string $recentAlbumThumbID = null,
-		?string $onThisDayAlbumThumbID = null,
+		string $unsortedAlbumThumbID = null,
+		string $starredAlbumThumbID = null,
+		string $publicAlbumThumbID = null,
+		string $recentAlbumThumbID = null,
+		string $onThisDayAlbumThumbID = null,
 		array $expectedAlbumJson = []
 	): array {
 		return [
@@ -348,10 +348,10 @@ abstract class BaseSharingWithNonAdminUser extends BaseSharingTestScenarios
 	}
 
 	protected function generateUnexpectedRootJson(
-		?string $unsortedAlbumThumbID = null,
-		?string $starredAlbumThumbID = null,
-		?string $publicAlbumThumbID = null,
-		?string $recentAlbumThumbID = null,
+		string $unsortedAlbumThumbID = null,
+		string $starredAlbumThumbID = null,
+		string $publicAlbumThumbID = null,
+		string $recentAlbumThumbID = null,
 		array $expectedAlbumJson = []
 	): ?array {
 		return null;

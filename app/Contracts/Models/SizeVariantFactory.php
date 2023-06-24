@@ -35,7 +35,7 @@ interface SizeVariantFactory
 	 *
 	 * @throws LycheeException
 	 */
-	public function init(Photo $photo, ?ImageHandlerInterface $referenceImage = null, ?AbstractSizeVariantNamingStrategy $namingStrategy = null): void;
+	public function init(Photo $photo, ImageHandlerInterface $referenceImage = null, AbstractSizeVariantNamingStrategy $namingStrategy = null): void;
 
 	/**
 	 * Conditionally creates a size variant for the designated size variant.

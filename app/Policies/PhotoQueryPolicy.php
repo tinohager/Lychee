@@ -98,7 +98,7 @@ class PhotoQueryPolicy
 	 *
 	 * @throws InternalLycheeException
 	 */
-	public function applySearchabilityFilter(FixedQueryBuilder $query, ?Album $origin = null): FixedQueryBuilder
+	public function applySearchabilityFilter(FixedQueryBuilder $query, Album $origin = null): FixedQueryBuilder
 	{
 		$this->prepareModelQueryOrFail($query, true, false, false);
 

@@ -28,8 +28,8 @@ class DisableCSP
 	public function handle(Request $request, \Closure $next): mixed
 	{
 		if (
-			config('debugbar.enabled', false) === true ||
-			$request->getRequestUri() === '/docs/api'
+			config('debugbar.enabled', false) === true
+			|| $request->getRequestUri() === '/docs/api'
 		) {
 			config(['secure-headers.csp.enable' => false]);
 		}

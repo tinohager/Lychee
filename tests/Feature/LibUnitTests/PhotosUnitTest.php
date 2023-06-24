@@ -39,9 +39,9 @@ class PhotosUnitTest
 	 */
 	public function upload(
 		UploadedFile $file,
-		?string $albumID = null,
+		string $albumID = null,
 		int $expectedStatusCode = 201,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->post(
 			'/api/Photo::add', [
@@ -111,7 +111,7 @@ class PhotosUnitTest
 	public function get(
 		string $photo_id,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/Photo::get', [
 			'photoID' => $photo_id,
@@ -136,7 +136,7 @@ class PhotosUnitTest
 		string $id,
 		string $title,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		/**
 		 * Try to set the title.
@@ -163,7 +163,7 @@ class PhotosUnitTest
 		string $id,
 		string $description,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Photo::setDescription', [
@@ -189,7 +189,7 @@ class PhotosUnitTest
 		array $ids,
 		bool $isStarred,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Photo::setStar', [
 			'photoIDs' => $ids,
@@ -215,7 +215,7 @@ class PhotosUnitTest
 		array $tags,
 		bool $override = true,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Photo::setTags', [
 			'photoIDs' => $ids,
@@ -240,7 +240,7 @@ class PhotosUnitTest
 		string $id,
 		bool $isPublic,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Photo::setPublic', [
@@ -266,7 +266,7 @@ class PhotosUnitTest
 		string $id,
 		string $license,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Photo::setLicense', [
@@ -292,7 +292,7 @@ class PhotosUnitTest
 		string $id,
 		string $date,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Photo::setUploadDate', [
@@ -318,7 +318,7 @@ class PhotosUnitTest
 		string $album_id,
 		array $ids,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Photo::setAlbum', [
@@ -346,7 +346,7 @@ class PhotosUnitTest
 		array $ids,
 		?string $targetAlbumID,
 		int $expectedStatusCode = 201,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/Photo::duplicate', [
 			'photoIDs' => $ids,
@@ -402,7 +402,7 @@ class PhotosUnitTest
 	public function delete(
 		array $ids,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Photo::delete', [
 			'photoIDs' => $ids,
@@ -429,13 +429,13 @@ class PhotosUnitTest
 	 */
 	public function importFromServer(
 		string $path,
-		?string $album_id = null,
-		?bool $delete_imported = null,
-		?bool $skip_duplicates = null,
-		?bool $import_via_symlink = null,
-		?bool $resync_metadata = null,
+		string $album_id = null,
+		bool $delete_imported = null,
+		bool $skip_duplicates = null,
+		bool $import_via_symlink = null,
+		bool $resync_metadata = null,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): string {
 		$requestParams = [
 			'albumID' => $album_id,
@@ -483,9 +483,9 @@ class PhotosUnitTest
 	 */
 	public function importFromUrl(
 		array $urls,
-		?string $album_id = null,
+		string $album_id = null,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson(
 			'/api/Import::url', [
@@ -515,7 +515,7 @@ class PhotosUnitTest
 		string $id,
 		int $direction,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/PhotoEditor::rotate', [
 			'photoID' => $id,

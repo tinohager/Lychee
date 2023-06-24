@@ -107,9 +107,9 @@ class GitHubVersion implements VersionControl, HasIsRelease
 	 */
 	public function hasPermissions(): bool
 	{
-		return Helpers::hasFullPermissions(base_path('.git')) &&
-			$this->remote instanceof GitCommits &&
-			Helpers::hasPermissions(base_path('.git/refs/heads/' . $this->localBranch)
+		return Helpers::hasFullPermissions(base_path('.git'))
+			&& $this->remote instanceof GitCommits
+			&& Helpers::hasPermissions(base_path('.git/refs/heads/' . $this->localBranch)
 			);
 	}
 
@@ -121,8 +121,8 @@ class GitHubVersion implements VersionControl, HasIsRelease
 	{
 		// We get the branch name
 		$branch_path = base_path('.git/HEAD');
-		if (!File::exists($branch_path) &&
-			!File::isReadable($branch_path)) {
+		if (!File::exists($branch_path)
+			&& !File::isReadable($branch_path)) {
 			// @codeCoverageIgnoreStart
 			Log::warning(__METHOD__ . ':' . __LINE__ . ' Could not read ' . $branch_path);
 
@@ -196,8 +196,8 @@ class GitHubVersion implements VersionControl, HasIsRelease
 
 		// We get the branch commit ID
 		$commit_path = base_path('.git/refs/heads/' . $this->localBranch);
-		if (!File::exists($commit_path) &&
-			!File::isReadable($commit_path)) {
+		if (!File::exists($commit_path)
+			&& !File::isReadable($commit_path)) {
 			// @codeCoverageIgnoreStart
 			Log::warning(__METHOD__ . ':' . __LINE__ . ' Could not read ' . $commit_path);
 

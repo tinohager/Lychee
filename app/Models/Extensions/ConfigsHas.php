@@ -17,8 +17,8 @@ trait ConfigsHas
 	public static function hasImagick(): bool
 	{
 		return
-			extension_loaded('imagick') &&
-			self::getValueAsBool('imagick');
+			extension_loaded('imagick')
+			&& self::getValueAsBool('imagick');
 	}
 
 	/**

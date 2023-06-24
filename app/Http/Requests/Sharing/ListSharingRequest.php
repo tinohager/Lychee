@@ -55,8 +55,8 @@ class ListSharingRequest extends BaseApiRequest implements HasBaseAlbum
 		}
 
 		if (
-			($this->owner !== null && $this->owner->id === Auth::id()) ||
-			($this->participant !== null && $this->participant->id === Auth::id())
+			($this->owner !== null && $this->owner->id === Auth::id())
+			|| ($this->participant !== null && $this->participant->id === Auth::id())
 		) {
 			return true;
 		}

@@ -375,11 +375,11 @@ class AlbumQueryPolicy
 		$model = $query->getModel();
 		$table = $query->getQuery()->from;
 		if (
-			!($model instanceof Album ||
-				$model instanceof TagAlbum ||
-				$model instanceof BaseAlbumImpl
-			) ||
-			$table !== $model->getTable()
+			!($model instanceof Album
+				|| $model instanceof TagAlbum
+				|| $model instanceof BaseAlbumImpl
+			)
+			|| $table !== $model->getTable()
 		) {
 			throw new InvalidQueryModelException('album');
 		}

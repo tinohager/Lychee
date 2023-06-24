@@ -29,10 +29,10 @@ class GetAlbumRequest extends BaseApiRequest implements HasAbstractAlbum
 		// front-end shows the password dialog if a password is set, but
 		// does not show the dialog otherwise.
 		if (
-			!$result &&
-			$this->album instanceof BaseAlbum &&
-			$this->album->is_public &&
-			$this->album->password !== null
+			!$result
+			&& $this->album instanceof BaseAlbum
+			&& $this->album->is_public
+			&& $this->album->password !== null
 		) {
 			throw new PasswordRequiredException();
 		}

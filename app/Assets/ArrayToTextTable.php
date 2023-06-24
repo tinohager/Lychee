@@ -78,7 +78,7 @@ class ArrayToTextTable
 	 * @throws PcreException
 	 * @throws MbstringException
 	 */
-	public function getTable(?array $rawData = null): string
+	public function getTable(array $rawData = null): string
 	{
 		if (!is_null($rawData)) {
 			$this->setData($rawData);

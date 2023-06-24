@@ -159,15 +159,15 @@ class Exec
 			//
 			// This way we could simply check if the path is anything below `vault`
 			if (
-				$realPath === Storage::path('big') ||
-				$realPath === Storage::path('raw') ||
-				$realPath === Storage::path('original') ||
-				$realPath === Storage::path('medium2x') ||
-				$realPath === Storage::path('medium') ||
-				$realPath === Storage::path('small2x') ||
-				$realPath === Storage::path('small') ||
-				$realPath === Storage::path('thumb2x') ||
-				$realPath === Storage::path('thumb')
+				$realPath === Storage::path('big')
+				|| $realPath === Storage::path('raw')
+				|| $realPath === Storage::path('original')
+				|| $realPath === Storage::path('medium2x')
+				|| $realPath === Storage::path('medium')
+				|| $realPath === Storage::path('small2x')
+				|| $realPath === Storage::path('small')
+				|| $realPath === Storage::path('thumb2x')
+				|| $realPath === Storage::path('thumb')
 			) {
 				throw new ReservedDirectoryException('The given path is a reserved path of Lychee (' . $path . ')');
 			}

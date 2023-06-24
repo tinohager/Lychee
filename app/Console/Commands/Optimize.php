@@ -101,11 +101,11 @@ class Optimize extends OptimizeCommand
 	protected function isNonProductive(): bool
 	{
 		return
-			'production' !== $this->getLaravel()->environment() ||
-			true === config('app.debug', false) ||
-			true === config('debugbar.enabled', false) ||
-			file_exists(base_path('vendor/bin/phpunit')) ||
-			file_exists(base_path('vendor/bin/phpstan')) ||
-			file_exists(base_path('vendor/bin/phpstan.phar'));
+			'production' !== $this->getLaravel()->environment()
+			|| true === config('app.debug', false)
+			|| true === config('debugbar.enabled', false)
+			|| file_exists(base_path('vendor/bin/phpunit'))
+			|| file_exists(base_path('vendor/bin/phpstan'))
+			|| file_exists(base_path('vendor/bin/phpstan.phar'));
 	}
 }

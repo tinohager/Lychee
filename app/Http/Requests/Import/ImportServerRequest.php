@@ -59,8 +59,8 @@ class ImportServerRequest extends BaseApiRequest implements HasAlbum
 			isset($values[RequestAttribute::IMPORT_VIA_SYMLINK_ATTRIBUTE]) ?
 				static::toBoolean($values[RequestAttribute::IMPORT_VIA_SYMLINK_ATTRIBUTE]) :
 				Configs::getValueAsBool('import_via_symlink'),
-			isset($values[RequestAttribute::RESYNC_METADATA_ATTRIBUTE]) &&
-				static::toBoolean($values[RequestAttribute::RESYNC_METADATA_ATTRIBUTE])
+			isset($values[RequestAttribute::RESYNC_METADATA_ATTRIBUTE])
+				&& static::toBoolean($values[RequestAttribute::RESYNC_METADATA_ATTRIBUTE])
 		);
 	}
 

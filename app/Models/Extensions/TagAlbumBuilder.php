@@ -41,8 +41,8 @@ class TagAlbumBuilder extends FixedQueryBuilder
 		}
 
 		if (
-			($columns === ['*'] || $columns === ['tag_albums.*']) &&
-			($baseQuery->columns === ['*'] || $baseQuery->columns === ['tag_albums.*'])
+			($columns === ['*'] || $columns === ['tag_albums.*'])
+			&& ($baseQuery->columns === ['*'] || $baseQuery->columns === ['tag_albums.*'])
 		) {
 			$this->addSelect([
 				DB::raw('null as max_taken_at'),

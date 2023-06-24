@@ -69,7 +69,7 @@ trait HasBidirectionalRelationships
 	 *
 	 * @return HasManyBidirectionally
 	 */
-	public function hasManyBidirectionally(string $related, ?string $foreignKey = null, ?string $localKey = null, ?string $foreignMethodName = null): HasManyBidirectionally
+	public function hasManyBidirectionally(string $related, string $foreignKey = null, string $localKey = null, string $foreignMethodName = null): HasManyBidirectionally
 	{
 		$instance = $this->newRelatedInstance($related);
 

@@ -137,7 +137,7 @@ abstract class BaseSharingTest extends BasePhotoTest
 		return $photoID === null ? null : ['id' => $photoID, 'type' => 'image/jpeg'];
 	}
 
-	protected function generateExpectedAlbumJson(string $albumID, string $albumTitle, ?string $parentAlbumID = null, ?string $thumbID = null, array $attrToMerge = []): array
+	protected function generateExpectedAlbumJson(string $albumID, string $albumTitle, string $parentAlbumID = null, string $thumbID = null, array $attrToMerge = []): array
 	{
 		return array_replace_recursive([
 			'id' => $albumID,
@@ -149,7 +149,7 @@ abstract class BaseSharingTest extends BasePhotoTest
 
 	protected function generateExpectedSmartAlbumJson(
 		bool $isPublic,
-		?string $thumbID = null,
+		string $thumbID = null,
 		array $expectedPhotos = []
 	): array {
 		return [

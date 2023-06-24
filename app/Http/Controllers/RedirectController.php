@@ -66,8 +66,8 @@ class RedirectController extends Controller
 			}
 
 			if (
-				$request->filled('password') &&
-				Configs::getValueAsBool('unlock_password_photos_with_url_param')
+				$request->filled('password')
+				&& Configs::getValueAsBool('unlock_password_photos_with_url_param')
 			) {
 				$album = $this->albumFactory->findBaseAlbumOrFail($albumID);
 				$this->unlock->do($album, $request['password']);

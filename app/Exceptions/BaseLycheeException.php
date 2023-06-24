@@ -51,7 +51,7 @@ abstract class BaseLycheeException extends HttpException implements ExternalLych
 	 *                                        for a typical end-user)
 	 * @param \Throwable|null $previous       an optional previous exception
 	 */
-	protected function __construct(int $httpStatusCode, string $message, ?\Throwable $previous = null)
+	protected function __construct(int $httpStatusCode, string $message, \Throwable $previous = null)
 	{
 		$code = null;
 		if ($previous !== null) {

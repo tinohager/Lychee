@@ -188,8 +188,8 @@ class Archive extends Action
 				// album_id === null shouldn't really be needed as all such photos
 				// in smart albums should be owned by the current user...
 				if (
-					($album instanceof BaseSmartAlbum || $album instanceof TagAlbum) &&
-					!Gate::check(PhotoPolicy::CAN_DOWNLOAD, $photo)
+					($album instanceof BaseSmartAlbum || $album instanceof TagAlbum)
+					&& !Gate::check(PhotoPolicy::CAN_DOWNLOAD, $photo)
 				) {
 					continue;
 				}

@@ -26,7 +26,6 @@ use App\Http\Requests\Settings\SetNSFWVisibilityRequest;
 use App\Http\Requests\Settings\SetPublicSearchSettingRequest;
 use App\Http\Requests\Settings\SetSortingSettingsRequest;
 use App\Models\Configs;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;

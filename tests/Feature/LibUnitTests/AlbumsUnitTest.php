@@ -42,7 +42,7 @@ class AlbumsUnitTest
 		?string $parent_id,
 		string $title,
 		int $expectedStatusCode = 201,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/Album::add', [
 			'title' => $title,
@@ -70,7 +70,7 @@ class AlbumsUnitTest
 		string $title,
 		array $tags,
 		int $expectedStatusCode = 201,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/Album::addByTags', [
 			'title' => $title,
@@ -96,7 +96,7 @@ class AlbumsUnitTest
 		array $ids,
 		?string $to,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::move', [
 			'albumID' => $to,
@@ -120,7 +120,7 @@ class AlbumsUnitTest
 		array $ids,
 		?string $to,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::merge', [
 			'albumID' => $to,
@@ -145,8 +145,8 @@ class AlbumsUnitTest
 	public function get(
 		string $id,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null,
-		?string $assertDontSee = null
+		string $assertSee = null,
+		string $assertDontSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson(
 			'/api/Album::get',
@@ -173,7 +173,7 @@ class AlbumsUnitTest
 		string $id,
 		string $password = '',
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Album::unlock',
@@ -197,7 +197,7 @@ class AlbumsUnitTest
 		string $id,
 		string $title,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Album::setTitle',
@@ -221,7 +221,7 @@ class AlbumsUnitTest
 		string $id,
 		string $description,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Album::setDescription',
@@ -245,7 +245,7 @@ class AlbumsUnitTest
 		string $id,
 		?string $photoID,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson(
 			'/api/Album::setCover',
@@ -269,7 +269,7 @@ class AlbumsUnitTest
 		string $id,
 		string $license,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::setLicense', [
 			'albumID' => $id,
@@ -295,7 +295,7 @@ class AlbumsUnitTest
 		string $sortingCol,
 		string $sortingOrder,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::setSorting', [
 			'albumID' => $id,
@@ -331,9 +331,9 @@ class AlbumsUnitTest
 		bool $is_link_required = false,
 		bool $is_nsfw = false,
 		bool $grants_downloadable = true,
-		?string $password = null,
+		string $password = null,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$params = [
 			'grants_full_photo_access' => $grants_full_photo_access,
@@ -365,7 +365,7 @@ class AlbumsUnitTest
 		string $id,
 		array $tags,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::setShowTags', [
 			'albumID' => $id,
@@ -414,7 +414,7 @@ class AlbumsUnitTest
 	public function delete(
 		array $ids,
 		int $expectedStatusCode = 204,
-		?string $assertSee = null
+		string $assertSee = null
 	): void {
 		$response = $this->testCase->postJson('/api/Album::delete', ['albumIDs' => $ids]);
 		$this->assertStatus($response, $expectedStatusCode);
@@ -437,7 +437,7 @@ class AlbumsUnitTest
 		string $id,
 		bool $includeSubAlbums,
 		int $expectedStatusCode = 200,
-		?string $assertSee = null
+		string $assertSee = null
 	): TestResponse {
 		$response = $this->testCase->postJson('/api/Album::getPositionData', [
 			'albumID' => $id,

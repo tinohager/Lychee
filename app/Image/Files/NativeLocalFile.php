@@ -69,7 +69,7 @@ class NativeLocalFile extends BaseMediaFile
 	 *
 	 * @returns void
 	 */
-	public function write($stream, bool $collectStatistics = false, ?string $mimeType = null): ?StreamStat
+	public function write($stream, bool $collectStatistics = false, string $mimeType = null): ?StreamStat
 	{
 		try {
 			$streamStat = $collectStatistics ? static::appendStatFilter($stream) : null;
@@ -262,9 +262,9 @@ class NativeLocalFile extends BaseMediaFile
 		$ext = $this->getOriginalExtension();
 
 		return
-			self::isSupportedImageMimeType($mime) &&
-			self::isSupportedImageFileExtension($ext) &&
-			$this->hasSupportedExifImageType();
+			self::isSupportedImageMimeType($mime)
+			&& self::isSupportedImageFileExtension($ext)
+			&& $this->hasSupportedExifImageType();
 	}
 
 	/**
@@ -280,8 +280,8 @@ class NativeLocalFile extends BaseMediaFile
 		$ext = $this->getOriginalExtension();
 
 		return
-			self::isSupportedVideoMimeType($mime) &&
-			self::isSupportedVideoFileExtension($ext);
+			self::isSupportedVideoMimeType($mime)
+			&& self::isSupportedVideoFileExtension($ext);
 	}
 
 	/**
@@ -294,8 +294,8 @@ class NativeLocalFile extends BaseMediaFile
 	public function isSupported(): bool
 	{
 		return
-			$this->isSupportedImage() ||
-			$this->isSupportedVideo();
+			$this->isSupportedImage()
+			|| $this->isSupportedVideo();
 	}
 
 	/**

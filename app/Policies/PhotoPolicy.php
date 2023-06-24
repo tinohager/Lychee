@@ -55,11 +55,11 @@ class PhotoPolicy extends BasePolicy
 	 */
 	public function canSee(?User $user, Photo $photo): bool
 	{
-		return $this->isOwner($user, $photo) ||
-			$photo->is_public ||
-			(
-				$photo->album !== null &&
-				$this->albumPolicy->canAccess($user, $photo->album)
+		return $this->isOwner($user, $photo)
+			|| $photo->is_public
+			|| (
+				$photo->album !== null
+				&& $this->albumPolicy->canAccess($user, $photo->album)
 			);
 	}
 
@@ -149,8 +149,8 @@ class PhotoPolicy extends BasePolicy
 		$photoIDs = array_unique($photoIDs);
 
 		return
-			count($photoIDs) === 0 ||
-			Photo::query()
+			count($photoIDs) === 0
+			|| Photo::query()
 				->whereIn('id', $photoIDs)
 				->where('owner_id', $user->id)
 				->count() === count($photoIDs);
@@ -176,7 +176,7 @@ class PhotoPolicy extends BasePolicy
 			return false;
 		}
 
-		return ($photo->album !== null && $photo->album->grants_full_photo_access) ||
-			($photo->album === null && Configs::getValueAsBool('grants_full_photo_access'));
+		return ($photo->album !== null && $photo->album->grants_full_photo_access)
+			|| ($photo->album === null && Configs::getValueAsBool('grants_full_photo_access'));
 	}
 }

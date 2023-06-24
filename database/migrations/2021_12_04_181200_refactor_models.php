@@ -1394,9 +1394,9 @@ return new class() extends Migration {
 			foreach ($sizeVariants as $sizeVariant) {
 				$fileExtension = '.' . pathinfo($sizeVariant->short_path, PATHINFO_EXTENSION);
 				if (
-					$sizeVariant->type === self::VARIANT_THUMB2X ||
-					$sizeVariant->type === self::VARIANT_SMALL2X ||
-					$sizeVariant->type === self::VARIANT_MEDIUM2X
+					$sizeVariant->type === self::VARIANT_THUMB2X
+					|| $sizeVariant->type === self::VARIANT_SMALL2X
+					|| $sizeVariant->type === self::VARIANT_MEDIUM2X
 				) {
 					$expectedFilename = $expectedBasename . '@2x' . $fileExtension;
 				} else {

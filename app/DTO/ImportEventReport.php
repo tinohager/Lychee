@@ -15,7 +15,7 @@ class ImportEventReport extends BaseImportReport
 	protected string $message;
 	protected ?\Throwable $throwable;
 
-	protected function __construct(string $subtype, SeverityType $severity, ?string $path, string $message, ?\Throwable $throwable = null)
+	protected function __construct(string $subtype, SeverityType $severity, ?string $path, string $message, \Throwable $throwable = null)
 	{
 		parent::__construct(self::REPORT_TYPE);
 		$this->subtype = $subtype;

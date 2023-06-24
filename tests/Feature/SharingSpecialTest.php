@@ -509,8 +509,8 @@ class SharingSpecialTest extends BaseSharingTest
 	}
 
 	protected function generateExpectedRootJson(
-		?string $recentAlbumThumbID = null,
-		?string $onThisDayAlbumThumbID = null,
+		string $recentAlbumThumbID = null,
+		string $onThisDayAlbumThumbID = null,
 		array $expectedAlbumJson = []
 	): array {
 		return [
@@ -535,7 +535,7 @@ class SharingSpecialTest extends BaseSharingTest
 
 	protected function generateExpectedSmartAlbumJson(
 		bool $isPublic,
-		?string $thumbID = null,
+		string $thumbID = null,
 		array $expectedPhotos = []
 	): array {
 		return [

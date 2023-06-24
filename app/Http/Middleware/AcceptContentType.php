@@ -48,9 +48,9 @@ class AcceptContentType
 			// Don't call `$request->acceptsAnyContentType`. It is broken.
 			$acceptable = $request->getAcceptableContentTypes();
 			if (
-				sizeof($acceptable) !== 0 &&
-				!in_array('*', $acceptable, true) &&
-				!in_array('*/*', $acceptable, true)
+				sizeof($acceptable) !== 0
+				&& !in_array('*', $acceptable, true)
+				&& !in_array('*/*', $acceptable, true)
 			) {
 				throw new UnexpectedContentType(self::ANY);
 			}

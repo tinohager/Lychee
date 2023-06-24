@@ -15,8 +15,8 @@ class LicenseRule implements ValidationRule
 	public function passes(string $attribute, mixed $value): bool
 	{
 		return
-			is_string($value) &&
-			array_search($value, Helpers::get_all_licenses(), true) !== false;
+			is_string($value)
+			&& array_search($value, Helpers::get_all_licenses(), true) !== false;
 	}
 
 	/**

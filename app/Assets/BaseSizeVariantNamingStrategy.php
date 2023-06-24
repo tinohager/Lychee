@@ -25,9 +25,9 @@ abstract class BaseSizeVariantNamingStrategy extends AbstractSizeVariantNamingSt
 	 */
 	protected function generateExtension(SizeVariantType $sizeVariant): string
 	{
-		if ($sizeVariant === SizeVariantType::THUMB ||
-			$sizeVariant === SizeVariantType::THUMB2X ||
-			($sizeVariant !== SizeVariantType::ORIGINAL && !$this->photo->isPhoto())
+		if ($sizeVariant === SizeVariantType::THUMB
+			|| $sizeVariant === SizeVariantType::THUMB2X
+			|| ($sizeVariant !== SizeVariantType::ORIGINAL && !$this->photo->isPhoto())
 		) {
 			return self::THUMB_EXTENSION;
 		}

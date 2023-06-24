@@ -24,15 +24,15 @@ class IntegerIDRule implements ValidationRule
 	{
 		return
 			(
-				$value === null &&
-				$this->isNullable
+				$value === null
+				&& $this->isNullable
 			) || (
-				$this->isRelaxed &&
-				filter_var($value, FILTER_VALIDATE_INT) !== false &&
-				intval($value) > 0
+				$this->isRelaxed
+				&& filter_var($value, FILTER_VALIDATE_INT) !== false
+				&& intval($value) > 0
 			) || (
-				is_int($value) &&
-				intval($value) > 0
+				is_int($value)
+				&& intval($value) > 0
 			);
 	}
 

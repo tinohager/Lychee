@@ -21,9 +21,9 @@ class IsInstalled implements MiddlewareCheck
 	{
 		try {
 			return
-				config('app.key') !== null &&
-				config('app.key') !== '' &&
-				Schema::hasTable('configs');
+				config('app.key') !== null
+				&& config('app.key') !== ''
+				&& Schema::hasTable('configs');
 		} catch (QueryException $e) {
 			// Authentication to DB failed.
 			// This means that we cannot even check that `configs` is present,
