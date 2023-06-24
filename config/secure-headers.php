@@ -317,7 +317,7 @@ return [
 	 * There is no easy way to use CSP with debug bar at the moment, so we disable CSP if debug bar is enabled.
 	 */
 	'csp' => [
-		'enable' => ((bool) env('DEBUGBAR_ENABLED', false)) === false,
+		'enable' => true,
 
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
 		'report-only' => false,
@@ -345,9 +345,10 @@ return [
 		],
 
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
-		'connect-src' => [
-			'https://lycheeorg.github.io/update.json',
-		],
+		'connect-src' => array_merge(
+			['https://lycheeorg.github.io/update.json'],
+			explode(',', env('SECURITY_HEADER_CSP_CONNECT_SRC', ''))
+		),
 
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
 		'default-src' => [
@@ -467,10 +468,10 @@ return [
 			// https://www.chromestatus.com/feature/5792234276388864
 			'report-sample' => true,
 
-			'allow' => [
-				'https://www.dropbox.com/static/api/1/dropins.js',
-				// 'url',
-			],
+			'allow' => array_merge(
+				['https://www.dropbox.com/static/api/1/dropins.js'],
+				explode(',', env('SECURITY_HEADER_SCRIPT_SRC_ALLOW', ''))
+			),
 
 			'schemes' => [
 				// 'data:',
