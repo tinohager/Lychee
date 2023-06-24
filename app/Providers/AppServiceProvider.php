@@ -35,8 +35,24 @@ use function Safe\stream_filter_register;
 
 class AppServiceProvider extends ServiceProvider
 {
-	public array $singletons
-	= [
+	/**
+	 * Defines which queries to ignore when doing explain.
+	 *
+	 * @var array<int,string>
+	 */
+	private array $ignore_log_SQL =
+	[
+		'information_schema', // Not interesting
+
+		// We do not want infinite loops
+		'EXPLAIN',
+
+		// Way too noisy
+		'configs',
+	];
+
+	public array $singletons =
+	[
 		SymLinkFunctions::class => SymLinkFunctions::class,
 		Helpers::class => Helpers::class,
 		CheckUpdate::class => CheckUpdate::class,
@@ -145,5 +161,46 @@ class AppServiceProvider extends ServiceProvider
 			SizeVariantFactory::class,
 			SizeVariantDefaultFactory::class
 		);
+	}
+
+	private function logSQL(QueryExecuted $query): void
+	{
+		// Quick exit
+		if (
+			Str::contains(request()->getRequestUri(), 'logs', true)
+		) {
+			return;
+		}
+
+		// Get message with binding outside.
+		$msg = '(' . $query->time . 'ms) ' . $query->sql . ' [' . implode(', ', $query->bindings) . ']';
+
+		// For pgsql and sqlite we log the query and exit early
+		if (config('database.default', 'mysql') !== 'mysql' ||
+			config('database.explain', false) === false ||
+			!Str::contains($query->sql, 'select') ||
+			Str::contains($query->sql, $this->ignore_log_SQL)
+		) {
+			Log::debug($msg);
+
+			return;
+		}
+
+		// For mysql we perform an explain as this is usually the one being slower...
+		$bindings = collect($query->bindings)->map(function ($q) {
+			return match (gettype($q)) {
+				'NULL' => "''",
+				'string' => "'{$q}'",
+				'boolean' => $q ? '1' : '0',
+				default => $q
+			};
+		})->all();
+
+		$sql_with_bindings = Str::replaceArray('?', $bindings, $query->sql);
+
+		$explain = DB::select('EXPLAIN ' . $sql_with_bindings);
+		$renderer = new ArrayToTextTable();
+		$renderer->setIgnoredKeys(['possible_keys', 'key_len', 'ref']);
+		Log::debug($msg . PHP_EOL . $renderer->getTable($explain));
 	}
 }
