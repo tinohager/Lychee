@@ -36,11 +36,4 @@ interface AbstractAlbum extends \JsonSerializable, Arrayable, Jsonable
 	 * @return Relation|Builder
 	 */
 	public function photos(): Relation|Builder;
-
-	/**
-	 * Returns the permissions for the public user.
-	 *
-	 * @return ?AccessPermission
-	 */
-	public function public_permissions(): AccessPermission|null;
 }

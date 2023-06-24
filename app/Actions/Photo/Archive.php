@@ -55,7 +55,7 @@ class Archive
 	public function do(Collection $photos, DownloadVariantType $downloadVariant): StreamedResponse
 	{
 		if ($photos->count() === 1) {
-			$response = $this->file($photos->first(), $downloadVariant);
+			$response = $this->file($photos->first(), $downloadVariant); // @phpstan-ignore-line
 		} else {
 			$response = $this->zip($photos, $downloadVariant);
 		}
