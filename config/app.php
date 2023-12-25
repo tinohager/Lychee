@@ -230,6 +230,7 @@ return [
 		 * Package Service Providers...
 		 */
 
+		\SocialiteProviders\Manager\ServiceProvider::class,
 		// Barryvdh\Debugbar\ServiceProvider::class,
 
 		/*
