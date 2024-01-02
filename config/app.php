@@ -66,9 +66,11 @@ return [
 	|
 	*/
 
-	'url' => env('APP_URL', 'http://localhost'),
+	'url' => rtrim(env('APP_URL', 'http://localhost'), '/'),
 
-	'asset_url' => null,
+	'dir_url' => rtrim(env('APP_DIR', ''), '/'),
+
+	'asset_url' => rtrim(env('ASSET_URL'), '/'),
 
 	/*
 	|--------------------------------------------------------------------------

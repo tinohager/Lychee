@@ -45,7 +45,11 @@ return [
 		'images' => [
 			'driver' => 'local',
 			'root' => env('LYCHEE_UPLOADS', public_path(env('LYCHEE_UPLOADS_DIR', 'uploads/'))),
-			'url' => env('LYCHEE_UPLOADS_URL', env('APP_URL', 'http://localhost') . '/' . env('LYCHEE_UPLOADS_DIR', 'uploads/')),
+			'url' => env('LYCHEE_UPLOADS_URL', '') !== '' ?
+				(rtrim(env('LYCHEE_UPLOADS_URL'), '/') . '/') :
+				(rtrim(env('APP_URL', 'http://localhost'), '/') . '/' .
+				(env('APP_DIR', '') === '' ? '' : (rtrim(env('APP_DIR', ''), '/') . '/')) .
+				rtrim(env('LYCHEE_UPLOADS_DIR', 'uploads'), '/') . '/'),
 			'visibility' => env('LYCHEE_IMAGE_VISIBILITY', 'public'),
 			'directory_visibility' => env('LYCHEE_IMAGE_VISIBILITY', 'public'),
 			'permissions' => [
