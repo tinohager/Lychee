@@ -63,7 +63,7 @@ class AppUrlMatchCheck implements DiagnosticPipe
 
 		if (($config_url . $dir_url . '/uploads/') === $config_url_imgage && !$this->checkUrlMatchCurrentHost()) {
 			$data[] = sprintf(
-				'Error: APP_URL (%s) does not match the current url (%s). This will prevent images to be properly displayed.',
+				'Error: APP_URL (%s) does not match the current url (%s). This will prevent images from being properly displayed.',
 				$censored_app_url,
 				$censored_current);
 		}
