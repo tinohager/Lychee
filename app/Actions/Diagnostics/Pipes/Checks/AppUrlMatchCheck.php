@@ -58,7 +58,7 @@ class AppUrlMatchCheck implements DiagnosticPipe
 
 		$config_url_imgage = config('filesystems.disks.images.url');
 		if ($config_url_imgage === '') {
-			$data[] = 'Error: LYCHEE_UPLOADS_URL is set and empty. This will prevent images to be displayed. Remove the line from your .env';
+			$data[] = 'Error: LYCHEE_UPLOADS_URL is set and empty. This will prevent images from being displayed. Remove the line from your .env';
 		}
 
 		if (($config_url . $dir_url . '/uploads/') === $config_url_imgage && !$this->checkUrlMatchCurrentHost()) {
