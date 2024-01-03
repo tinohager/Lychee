@@ -61,7 +61,7 @@ class AppUrlMatchCheck implements DiagnosticPipe
 			$data[] = 'Error: LYCHEE_UPLOADS_URL is set and empty. This will prevent images to be displayed. Remove the line from your .env';
 		}
 
-		if (($config_url . ($dir_url !== '' ? $dir_url . '/' : '') . '/uploads/') === $config_url_imgage && !$this->checkUrlMatchCurrentHost()) {
+		if (($config_url . $dir_url . '/uploads/') === $config_url_imgage && !$this->checkUrlMatchCurrentHost()) {
 			$data[] = sprintf(
 				'Error: APP_URL (%s) does not match the current url (%s). This will prevent images to be properly displayed.',
 				$censored_app_url,
