@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
-import { computed, Ref, ref, watch } from "vue";
+import { computed, Ref, ref, watch, onMounted, onBeforeUnmount } from "vue";
 import UploadingLine from "../forms/upload/UploadingLine.vue";
 import ScrollPanel from "primevue/scrollpanel";
 import UploadService from "@/services/upload-service";
@@ -113,6 +113,7 @@ const showCancel = computed(() => counts.value.files > 0 && counts.value.complet
 const showResume = computed(() => counts.value.waiting > 0 && counts.value.uploading === 0);
 
 function load() {
+	console.log('load - UploadService.getSetUp');
 	UploadService.getSetUp().then((response) => {
 		setup.value = response.data;
 	});
@@ -127,6 +128,9 @@ const counts = computed(() => {
 });
 
 function upload(event: Event) {
+
+	console.log('start upload');
+
 	// countCompleted.value = 0;
 	const target = event.target as HTMLInputElement;
 	if (target.files === null) {
@@ -134,6 +138,7 @@ function upload(event: Event) {
 	}
 
 	for (let i = 0; i < target.files.length; i++) {
+		console.log('add file to queue');
 		list_upload_files.value.push({ file: target.files[i], status: "waiting" });
 	}
 
@@ -142,6 +147,7 @@ function upload(event: Event) {
 }
 
 function uploadNext(searchIndex = 0, max_processing_limit: number | undefined = undefined): boolean {
+	console.log(`uploadNext - ${searchIndex} ${max_processing_limit}`);
 	let isUploading = false;
 
 	let offset = 0;
@@ -163,6 +169,8 @@ function uploadNext(searchIndex = 0, max_processing_limit: number | undefined = 
 			isUploading = true;
 		}
 	}
+
+	console.log(`uploadNext - ${searchIndex} ${max_processing_limit} done`);
 
 	return isUploading;
 }
@@ -190,16 +198,25 @@ function close() {
 	is_upload_visible.value = false;
 }
 
-load();
+onMounted(() => {
+	load();
+	console.log('UploadPanel.vue mounted');
 
-watch(
-	() => is_upload_visible.value,
-	() => {
-		if (list_upload_files.value.length > 0) {
-			uploadNext(0, setup.value?.upload_processing_limit);
-		}
-	},
-);
+});
+
+onBeforeUnmount(() => {
+	console.log('UploadPanel.vue unmounted');
+});
+
+// watch(
+// 	() => is_upload_visible.value,
+// 	() => {
+// 		if (list_upload_files.value.length > 0) {
+// 			console.log('uploadNext via watch');
+// 			uploadNext(0, setup.value?.upload_processing_limit);
+// 		}
+// 	},
+// );
 
 watch(
 	() => route.params.albumid,

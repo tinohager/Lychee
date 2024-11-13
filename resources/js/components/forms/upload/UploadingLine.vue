@@ -16,7 +16,7 @@ import UploadService, { UploadData } from "@/services/upload-service";
 import { AxiosProgressEvent } from "axios";
 import { trans } from "laravel-vue-i18n";
 import ProgressBar from "primevue/progressbar";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 
 const props = withDefaults(
 	defineProps<{
@@ -134,7 +134,12 @@ function process() {
 		});
 }
 
+onMounted(() =>{
+	console.log(`uploadingLine mounted ${props.file.name} ${props.albumId} ${props.status} ${props.chunkSize} ${props.index}`);
+})
+
 if (status.value === "uploading") {
+	console.log("start upload process");
 	process();
 }
 
@@ -142,6 +147,7 @@ watch(
 	() => props.status,
 	(newStatus, oldStatus) => {
 		if (oldStatus === "waiting" && newStatus === "uploading") {
+			console.log("start upload process via watch");
 			process();
 		}
 	},

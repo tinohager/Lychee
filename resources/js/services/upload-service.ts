@@ -36,6 +36,7 @@ const UploadService = {
 			transformRequest: [(data) => data],
 		};
 
+		console.log("Uploading file", info.file);
 		return axios.post(`${Constants.getApiUrl()}Photo`, formData, config);
 	},
 };
