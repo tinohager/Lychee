@@ -118,6 +118,7 @@ function load() {
 		setup.value = response.data;
 	});
 }
+
 const counts = computed(() => {
 	return {
 		files: list_upload_files.value.length,
@@ -199,13 +200,12 @@ function close() {
 }
 
 onMounted(() => {
+	console.log(`UploadPanel.vue mounted ${albumId.value}`);
 	load();
-	console.log('UploadPanel.vue mounted');
-
 });
 
 onBeforeUnmount(() => {
-	console.log('UploadPanel.vue unmounted');
+	console.log(`UploadPanel.vue unmounted ${albumId.value}`);
 });
 
 // watch(

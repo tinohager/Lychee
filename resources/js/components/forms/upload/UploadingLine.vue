@@ -134,7 +134,7 @@ function process() {
 		});
 }
 
-onMounted(() =>{
+onMounted(() => {
 	console.log(`uploadingLine mounted ${props.file.name} ${props.albumId} ${props.status} ${props.chunkSize} ${props.index}`);
 })
 
