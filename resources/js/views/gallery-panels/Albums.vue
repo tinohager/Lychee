@@ -118,7 +118,7 @@
 <script setup lang="ts">
 import AlbumThumbPanel from "@/components/gallery/AlbumThumbPanel.vue";
 import { useAuthStore } from "@/stores/Auth";
-import { computed, ref } from "vue";
+import { computed, ref, onUnmounted, onMounted } from "vue";
 import AlbumsHeader from "@/components/headers/AlbumsHeader.vue";
 import { useLycheeStateStore } from "@/stores/LycheeState";
 import { storeToRefs } from "pinia";
@@ -166,6 +166,15 @@ const { selectedAlbum, selectedAlbumsIdx, selectedAlbums, selectedAlbumsIds, alb
 // Modals for Albums
 const { isDeleteVisible, toggleDelete, isMergeAlbumVisible, toggleMergeAlbum, isMoveVisible, toggleMove, isRenameVisible, toggleRename } =
 	useGalleryModals(is_upload_visible);
+
+
+onMounted(() => {
+	console.log('onMounted - Albums.vue');
+});
+
+onUnmounted(() => {
+	console.log('onUnmounted - Albums.vue');
+});
 
 // Unused.
 const photoCallbacks = {
@@ -230,6 +239,7 @@ const { onPaste, dragEnd, dropUpload } = useMouseEvents(rootRights, is_upload_vi
 window.addEventListener("paste", onPaste);
 window.addEventListener("dragover", dragEnd);
 window.addEventListener("drop", dropUpload);
+
 router.afterEach(() => {
 	window.removeEventListener("paste", onPaste);
 	window.removeEventListener("dragover", dragEnd);

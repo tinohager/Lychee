@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, onUnmounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import UploadPanel from "@/components/modals/UploadPanel.vue";
 import { onKeyStroke } from "@vueuse/core";
@@ -126,6 +126,19 @@ const emits = defineEmits<{
 	refresh: [];
 	toggleSlideShow: [];
 }>();
+
+
+onMounted(() => {
+	console.log('onMounted - AlbumHeader.vue');
+});
+
+onUnmounted(() => {
+	console.log('onUnmounted - AlbumHeader.vue');
+});
+
+onBeforeUnmount(() => {
+	console.log('onBeforeUnmount - AlbumHeader.vue');
+});
 
 function toggleUploadTrack() {
 	document.getElementById("upload_track_file")?.click();
@@ -182,7 +195,17 @@ function refresh() {
 	emits("refresh");
 }
 
-onKeyStroke("n", () => !shouldIgnoreKeystroke() && (isCreateAlbumOpen.value = true));
+onKeyStroke("n", (e) =>
+{
+	console.log('AlbumHeader - onKeyStroke("n")');
+
+	if (shouldIgnoreKeystroke()) {
+		return;
+	}
+
+	e.preventDefault();
+	isCreateAlbumOpen.value = true;
+});
 onKeyStroke("u", () => !shouldIgnoreKeystroke() && (is_upload_visible.value = true));
 onKeyStroke("i", () => !shouldIgnoreKeystroke() && toggleDetails());
 onKeyStroke("l", () => !shouldIgnoreKeystroke() && props.user.id === null && (is_login_open.value = true));

@@ -10,6 +10,7 @@
 		:pt="props.pt"
 		:ptOptions="props.ptOptions"
 		:unstyled="props.unstyled"
+		:autofocus="props.autofocus"
 		@update:modelValue="($event) => emits('updated', $event)"
 	/>
 </template>
@@ -28,6 +29,7 @@ const props = defineProps<{
 	pt?: PassThrough<InputTextPassThroughOptions>;
 	ptOptions?: PassThroughOptions;
 	unstyled?: boolean;
+	autofocus?: boolean;
 	class?: string;
 }>();
 

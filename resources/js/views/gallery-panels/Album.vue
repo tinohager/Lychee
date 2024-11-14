@@ -166,7 +166,7 @@
 </template>
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/Auth";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onUnmounted, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AlbumThumbPanel from "@/components/gallery/AlbumThumbPanel.vue";
 import PhotoThumbPanel from "@/components/gallery/PhotoThumbPanel.vue";
@@ -331,6 +331,15 @@ const albumCallbacks = {
 	},
 };
 
+
+onMounted(() => {
+	console.log('onMounted - Album.vue');
+});
+
+onUnmounted(() => {
+	console.log('onUnmounted - Album.vue');
+});
+
 const { menu, Menu, photoMenuOpen, albumMenuOpen } = useContextMenu(
 	{
 		config: config,
@@ -380,9 +389,9 @@ window.addEventListener("dragover", dragEnd);
 window.addEventListener("drop", dropUpload);
 
 router.afterEach(() => {
-	window.removeEventListener("paste", onPaste);
-	window.removeEventListener("dragover", dragEnd);
-	window.removeEventListener("drop", dropUpload);
+ 	window.removeEventListener("paste", onPaste);
+ 	window.removeEventListener("dragover", dragEnd);
+ 	window.removeEventListener("drop", dropUpload);
 });
 
 watch(
@@ -390,9 +399,11 @@ watch(
 	(newId, _oldId) => {
 		unselect();
 		albumid.value = newId as string;
+
 		window.addEventListener("paste", onPaste);
 		window.addEventListener("dragover", dragEnd);
 		window.addEventListener("drop", dropUpload);
+
 		refresh();
 	},
 );

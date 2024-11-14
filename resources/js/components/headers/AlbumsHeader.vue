@@ -1,7 +1,7 @@
 <template>
 	<LoginModal v-if="props.user.id === null" v-model:visible="is_login_open" @logged-in="refresh" @open-webauthn="isWebAuthnOpen = true" />
 	<WebauthnModal v-if="props.user.id === null && !isWebAuthnUnavailable" v-model:visible="isWebAuthnOpen" @logged-in="refresh" />
-	<!-- <UploadPanel v-if="canUpload" @refresh="refresh" key="upload_modal" /> -->
+	<UploadPanel v-if="canUpload" @refresh="refresh" key="upload_modal" />
 	<ImportFromServer v-if="canUpload" v-model:visible="isImportFromServerOpen" />
 	<ImportFromLink v-if="canUpload" v-model:visible="isImportFromLinkOpen" :parent-id="null" />
 	<DropBox v-if="canUpload" v-model:visible="isImportFromDropboxOpen" :album-id="null" />
@@ -94,7 +94,7 @@ import ImportFromLink from "@/components/modals/ImportFromLink.vue";
 import ImportFromServer from "@/components/modals/ImportFromServer.vue";
 import AlbumCreateDialog from "@/components/forms/album/AlbumCreateDialog.vue";
 import AlbumCreateTagDialog from "@/components/forms/album/AlbumCreateTagDialog.vue";
-import { computed, ComputedRef, ref } from "vue";
+import { computed, ComputedRef, ref, onBeforeUnmount, onMounted, onUnmounted } from "vue";
 import { onKeyStroke } from "@vueuse/core";
 import { useLycheeStateStore } from "@/stores/LycheeState";
 import { isTouchDevice, shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
@@ -128,6 +128,19 @@ const emits = defineEmits<{
 	refresh: [];
 	help: [];
 }>();
+
+onMounted(() => {
+	console.log('onMounted - AlbumsHeader.vue');
+});
+
+onUnmounted(() => {
+	console.log('onUnmounted - AlbumsHeader.vue');
+});
+
+onBeforeUnmount(() => {
+	console.log('onBeforeUnmount - AlbumsHeader.vue');
+});
+
 
 // 'UPLOAD_PHOTO' => 'Upload Photo',
 // 	'IMPORT_LINK' => 'Import from Link',
@@ -189,7 +202,19 @@ function openSearch() {
 	router.push({ name: "search" });
 }
 
-onKeyStroke("n", () => !shouldIgnoreKeystroke() && props.rights.can_upload && (isCreateAlbumOpen.value = true));
+onKeyStroke("n", (e) => {
+	console.log('AlbumsHeader - onKeyStroke("n")');
+	if (shouldIgnoreKeystroke()) {
+		return;
+	}
+
+	if (!props.rights.can_upload) {
+		return;
+	}
+
+	e.preventDefault();
+	isCreateAlbumOpen.value = true;
+});
 onKeyStroke("u", () => !shouldIgnoreKeystroke() && props.rights.can_upload && (is_upload_visible.value = true));
 onKeyStroke("l", () => !shouldIgnoreKeystroke() && props.user.id === null && (is_login_open.value = true));
 onKeyStroke("k", () => !shouldIgnoreKeystroke() && props.user.id === null && !isWebAuthnUnavailable.value && (isWebAuthnOpen.value = true));

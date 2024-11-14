@@ -5,7 +5,7 @@
 				<p class="mb-5 px-9">{{ $t("lychee.TITLE_NEW_ALBUM") }}</p>
 				<div class="inline-flex flex-col gap-2 px-9">
 					<FloatLabel variant="on">
-						<InputText id="title" v-model="title" />
+						<InputText id="title" v-model="title" autofocus />
 						<label class="" for="title">{{ $t("lychee.ALBUM_TITLE") }}</label>
 					</FloatLabel>
 				</div>
@@ -25,7 +25,7 @@
 import AlbumService from "@/services/album-service";
 import Dialog from "primevue/dialog";
 import InputText from "@/components/forms/basic/InputText.vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import FloatLabel from "primevue/floatlabel";
 import Button from "primevue/button";

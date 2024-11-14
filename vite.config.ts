@@ -25,6 +25,38 @@ const baseConfig =   {
       },
     }),
     i18n(),
+	{
+		name: 'develop-rewrite-middleware',
+		configureServer(server) {
+
+          const viteIndexPath = '/vite/index.html';
+
+		  server.middlewares.use((req, res, next) => {
+			if (!req.url) {
+				next();
+				return;
+			}
+
+			if (req.url === '/') {
+              req.url = viteIndexPath;
+			}
+
+			if (req.url === '/settings') {
+              req.url = viteIndexPath;
+			}
+
+			if (req.url === '/diagnostics') {
+				req.url = viteIndexPath;
+			}
+
+			if (req.url.startsWith('/gallery')) {
+			  req.url = viteIndexPath
+			}
+
+			next();
+		  });
+		}
+	  }
   ],
   server: {
     watch: {
@@ -39,7 +71,7 @@ const baseConfig =   {
         "**/vendor/**",
         "**/presets/**",
       ],
-    },
+    }
   },
   resolve: {
     alias: {
