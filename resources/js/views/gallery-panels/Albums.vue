@@ -1,9 +1,13 @@
 <template>
+	<test />
+
+
+
 	<KeybindingsHelp v-model:visible="isKeybindingsHelpOpen" v-if="user?.id" />
 	<div v-if="rootConfig && rootRights" @click="unselect" class="h-svh overflow-y-auto">
-		<Collapse :when="!is_full_screen">
-			<AlbumsHeader
-				v-if="user"
+
+		<AlbumsHeader
+				v-if="user && rootRights && rootConfig"
 				:user="user"
 				:title="title"
 				:rights="rootRights"
@@ -11,6 +15,9 @@
 				@help="isKeybindingsHelpOpen = true"
 				:config="rootConfig"
 			/>
+
+		<Collapse :when="!is_full_screen">
+
 		</Collapse>
 		<AlbumThumbPanel
 			v-if="smartAlbums.length > 0"
@@ -118,12 +125,11 @@
 <script setup lang="ts">
 import AlbumThumbPanel from "@/components/gallery/AlbumThumbPanel.vue";
 import { useAuthStore } from "@/stores/Auth";
-import { computed, ref, onUnmounted, onMounted } from "vue";
+import { computed, ref, onUnmounted, onMounted, onBeforeUnmount } from "vue";
 import AlbumsHeader from "@/components/headers/AlbumsHeader.vue";
+import test from "@/components/test.vue";
 import { useLycheeStateStore } from "@/stores/LycheeState";
 import { storeToRefs } from "pinia";
-import { onKeyStroke } from "@vueuse/core";
-import { getModKey, shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import KeybindingsHelp from "@/components/modals/KeybindingsHelp.vue";
 import { useSelection } from "@/composables/selections/selections";
 import { useContextMenu } from "@/composables/contextMenus/contextMenu";
@@ -139,7 +145,6 @@ import Divider from "primevue/divider";
 import { Collapse } from "vue-collapsed";
 import AlbumService from "@/services/album-service";
 import { useRouter } from "vue-router";
-import { useMouseEvents } from "@/composables/album/uploadEvents";
 import GalleryFooter from "@/components/footers/GalleryFooter.vue";
 
 const auth = useAuthStore();
@@ -170,6 +175,10 @@ const { isDeleteVisible, toggleDelete, isMergeAlbumVisible, toggleMergeAlbum, is
 
 onMounted(() => {
 	console.log('onMounted - Albums.vue');
+});
+
+onBeforeUnmount(() => {
+	console.log('onBeforeUnmount - Albums.vue');
 });
 
 onUnmounted(() => {
@@ -226,23 +235,7 @@ const albumPanelConfig = computed<AlbumThumbConfig>(() => ({
 
 refresh();
 
-onKeyStroke("h", () => !shouldIgnoreKeystroke() && (are_nsfw_visible.value = !are_nsfw_visible.value));
-onKeyStroke("f", () => !shouldIgnoreKeystroke() && lycheeStore.toggleFullScreen());
-onKeyStroke(" ", () => !shouldIgnoreKeystroke() && unselect());
-onKeyStroke("m", () => !shouldIgnoreKeystroke() && rootRights.value?.can_edit && hasSelection() && toggleMove());
-onKeyStroke(["Delete", "Backspace"], () => !shouldIgnoreKeystroke() && rootRights.value?.can_edit && hasSelection() && toggleDelete());
 
-onKeyStroke([getModKey(), "a"], () => !shouldIgnoreKeystroke() && selectEverything());
 
-const { onPaste, dragEnd, dropUpload } = useMouseEvents(rootRights, is_upload_visible, list_upload_files);
 
-window.addEventListener("paste", onPaste);
-window.addEventListener("dragover", dragEnd);
-window.addEventListener("drop", dropUpload);
-
-router.afterEach(() => {
-	window.removeEventListener("paste", onPaste);
-	window.removeEventListener("dragover", dragEnd);
-	window.removeEventListener("drop", dropUpload);
-});
 </script>

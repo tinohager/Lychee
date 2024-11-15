@@ -46,8 +46,6 @@ import DataTable from "primevue/datatable";
 import Dialog from "primevue/dialog";
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
-import { onKeyStroke } from "@vueuse/core";
-import { shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 
 const visible = defineModel("visible", { default: false });
 
@@ -138,5 +136,4 @@ const shortcutsList = ref([
 	},
 ]);
 
-onKeyStroke("?", () => !shouldIgnoreKeystroke() && (visible.value = true));
 </script>

@@ -36,7 +36,6 @@ import { useLycheeStateStore } from "@/stores/LycheeState";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import ToggleSwitch from "primevue/toggleswitch";
-import { onKeyStroke } from "@vueuse/core";
 import { shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import SizeVariantMeter from "@/components/statistics/SizeVariantMeter.vue";
 import TotalCard, { TotalAlbum } from "@/components/statistics/TotalCard.vue";
@@ -66,5 +65,5 @@ authStore.getUser().then((data) => {
 	load.value = true;
 });
 
-onKeyStroke("h", () => !shouldIgnoreKeystroke() && (are_nsfw_visible.value = !are_nsfw_visible.value));
+
 </script>

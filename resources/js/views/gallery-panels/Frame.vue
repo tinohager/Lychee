@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { useSlideshowFunction } from "@/composables/photo/slideshow";
 import AlbumService from "@/services/album-service";
-import { onKeyStroke } from "@vueuse/core";
 import Button from "primevue/button";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -64,7 +63,5 @@ function goBack() {
 	}
 }
 
-onKeyStroke("Escape", () => {
-	goBack();
-});
+
 </script>

@@ -76,10 +76,8 @@ import Toolbar from "primevue/toolbar";
 import { computed, ref, onMounted, onUnmounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import UploadPanel from "@/components/modals/UploadPanel.vue";
-import { onKeyStroke } from "@vueuse/core";
 import AlbumCreateDialog from "@/components/forms/album/AlbumCreateDialog.vue";
 import ContextMenu from "primevue/contextmenu";
-import { shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import ImportFromLink from "@/components/modals/ImportFromLink.vue";
 import { useContextMenuAlbumAdd } from "@/composables/contextMenus/contextMenuAlbumAdd";
 import Divider from "primevue/divider";
@@ -195,37 +193,4 @@ function refresh() {
 	emits("refresh");
 }
 
-onKeyStroke("n", (e) =>
-{
-	console.log('AlbumHeader - onKeyStroke("n")');
-
-	if (shouldIgnoreKeystroke()) {
-		return;
-	}
-
-	e.preventDefault();
-	isCreateAlbumOpen.value = true;
-});
-onKeyStroke("u", () => !shouldIgnoreKeystroke() && (is_upload_visible.value = true));
-onKeyStroke("i", () => !shouldIgnoreKeystroke() && toggleDetails());
-onKeyStroke("l", () => !shouldIgnoreKeystroke() && props.user.id === null && (is_login_open.value = true));
-onKeyStroke("/", () => !shouldIgnoreKeystroke() && props.config.is_search_accessible && openSearch());
-// on key stroke escape:
-// 1. lose focus
-// 2. close modals
-// 3. go back
-onKeyStroke("Escape", () => {
-	// 1. lose focus
-	if (shouldIgnoreKeystroke() && document.activeElement instanceof HTMLElement) {
-		document.activeElement.blur();
-		return;
-	}
-
-	if (are_details_open.value) {
-		toggleDetails();
-		return;
-	}
-
-	goBack();
-});
 </script>

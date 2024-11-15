@@ -138,7 +138,6 @@ import { useGalleryModals } from "@/composables/modalsTriggers/galleryModals";
 import { useSelection } from "@/composables/selections/selections";
 import { useAuthStore } from "@/stores/Auth";
 import { useLycheeStateStore } from "@/stores/LycheeState";
-import { onKeyStroke } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
@@ -321,7 +320,5 @@ if (lycheeStore.isSearchActive) {
 	search(lycheeStore.search_term);
 }
 
-onKeyStroke("Escape", () => {
-	goBack();
-});
+
 </script>

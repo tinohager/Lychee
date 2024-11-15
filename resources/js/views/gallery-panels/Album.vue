@@ -175,8 +175,6 @@ import AlbumHero from "@/components/gallery/AlbumHero.vue";
 import AlbumEdit from "@/components/drawers/AlbumEdit.vue";
 import AlbumHeader from "@/components/headers/AlbumHeader.vue";
 import { useLycheeStateStore } from "@/stores/LycheeState";
-import { onKeyStroke } from "@vueuse/core";
-import { getModKey, shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import { storeToRefs } from "pinia";
 import { useSelection } from "@/composables/selections/selections";
 import Divider from "primevue/divider";
@@ -372,27 +370,8 @@ loadLayout();
 
 refresh();
 
-onKeyStroke("h", () => !shouldIgnoreKeystroke() && (are_nsfw_visible.value = !are_nsfw_visible.value));
-onKeyStroke("f", () => !shouldIgnoreKeystroke() && lycheeStore.toggleFullScreen());
-onKeyStroke(" ", () => !shouldIgnoreKeystroke() && unselect());
-
-// Privileged actions
-onKeyStroke("m", () => !shouldIgnoreKeystroke() && album.value?.rights.can_move && hasSelection() && toggleMove());
-onKeyStroke(["Delete", "Backspace"], () => !shouldIgnoreKeystroke() && album.value?.rights.can_delete && hasSelection() && toggleDelete());
-
-onKeyStroke([getModKey(), "a"], () => !shouldIgnoreKeystroke() && selectEverything());
-
 const { onPaste, dragEnd, dropUpload } = useMouseEvents(rights, is_upload_visible, list_upload_files);
 
-window.addEventListener("paste", onPaste);
-window.addEventListener("dragover", dragEnd);
-window.addEventListener("drop", dropUpload);
-
-router.afterEach(() => {
- 	window.removeEventListener("paste", onPaste);
- 	window.removeEventListener("dragover", dragEnd);
- 	window.removeEventListener("drop", dropUpload);
-});
 
 watch(
 	() => route.params.albumid,
@@ -400,9 +379,7 @@ watch(
 		unselect();
 		albumid.value = newId as string;
 
-		window.addEventListener("paste", onPaste);
-		window.addEventListener("dragover", dragEnd);
-		window.addEventListener("drop", dropUpload);
+
 
 		refresh();
 	},

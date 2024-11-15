@@ -38,8 +38,6 @@ import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { onKeyStroke } from "@vueuse/core";
-import { shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import DownloadPhoto from "../modals/DownloadPhoto.vue";
 import { useLycheeStateStore } from "@/stores/LycheeState";
 import { storeToRefs } from "pinia";
@@ -58,9 +56,6 @@ const lycheeStore = useLycheeStateStore();
 lycheeStore.init();
 const { is_full_screen, is_edit_open, are_details_open, is_slideshow_active } = storeToRefs(lycheeStore);
 const isDownloadOpen = ref(false);
-
-onKeyStroke("i", () => !shouldIgnoreKeystroke() && toggleDetails());
-onKeyStroke("e", () => !shouldIgnoreKeystroke() && props.photo.rights.can_edit && toggleEdit());
 
 function goBack() {
 	if (lycheeStore.isSearchActive && !lycheeStore.search_album_id) {
@@ -90,27 +85,5 @@ function openInNewTab(url: string) {
 	window?.open(url, "_blank")?.focus();
 }
 
-// on key stroke escape:
-// 1. lose focus
-// 2. close modals
-// 3. go back
-onKeyStroke("Escape", () => {
-	if (is_slideshow_active.value) {
-		is_slideshow_active.value = false;
-		return;
-	}
 
-	// 1. lose focus
-	if (shouldIgnoreKeystroke() && document.activeElement instanceof HTMLElement) {
-		document.activeElement.blur();
-		return;
-	}
-
-	if (are_details_open.value) {
-		toggleDetails();
-		return;
-	}
-
-	goBack();
-});
 </script>

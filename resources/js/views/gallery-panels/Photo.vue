@@ -152,7 +152,6 @@ import { useRoute, useRouter } from "vue-router";
 import PhotoHeader from "@/components/headers/PhotoHeader.vue";
 import PhotoEdit from "@/components/drawers/PhotoEdit.vue";
 import PhotoService from "@/services/photo-service";
-import { onKeyStroke } from "@vueuse/core";
 import { shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
 import Overlay from "@/components/gallery/photo/Overlay.vue";
 import { useGalleryModals } from "@/composables/modalsTriggers/galleryModals";
@@ -286,17 +285,6 @@ if (is_slideshow_active.value) {
 	start();
 }
 
-onKeyStroke("ArrowLeft", () => !shouldIgnoreKeystroke() && hasPrevious() && previous(true));
-onKeyStroke("ArrowRight", () => !shouldIgnoreKeystroke() && hasNext() && next(true));
-onKeyStroke("o", () => !shouldIgnoreKeystroke() && rotateOverlay());
-onKeyStroke(" ", () => !shouldIgnoreKeystroke() && slideshow());
-onKeyStroke("f", () => !shouldIgnoreKeystroke() && lycheeStore.toggleFullScreen());
-
-// Priviledged operations
-onKeyStroke("m", () => !shouldIgnoreKeystroke() && photo.value?.rights.can_edit && toggleMove());
-onKeyStroke("s", () => !shouldIgnoreKeystroke() && photo.value?.rights.can_edit && toggleStar());
-onKeyStroke(["Delete", "Backspace"], () => !shouldIgnoreKeystroke() && album.value?.resource?.rights.can_delete && toggleDelete());
-
 function scrollTo(event: WheelEvent) {
 	if (shouldIgnoreKeystroke()) {
 		return;
@@ -313,7 +301,7 @@ function scrollTo(event: WheelEvent) {
 		previous(true);
 	}
 }
-window.addEventListener("wheel", scrollTo);
+
 
 useSwipe(swipe, {
 	onSwipe(_e: TouchEvent) {},
@@ -334,12 +322,8 @@ watch(
 	() => route.params.photoid,
 	(newId, _oldId) => {
 		photoId.value = newId as string;
-		window.addEventListener("wheel", scrollTo);
 		refresh();
 	},
 );
 
-router.afterEach(() => {
-	window.removeEventListener("wheel", scrollTo);
-});
 </script>

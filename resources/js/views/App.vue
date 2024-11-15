@@ -11,9 +11,6 @@
 import Toast from "primevue/toast";
 import LeftMenu from "@/menus/LeftMenu.vue";
 import Error from "@/views/Error.vue";
-import { disableCtrlA } from "@/utils/keybindings-utils";
-
-disableCtrlA();
 </script>
 
 <style lang="scss">

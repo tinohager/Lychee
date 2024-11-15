@@ -1,86 +1,14 @@
 <template>
-	<LoginModal v-if="props.user.id === null" v-model:visible="is_login_open" @logged-in="refresh" @open-webauthn="isWebAuthnOpen = true" />
-	<WebauthnModal v-if="props.user.id === null && !isWebAuthnUnavailable" v-model:visible="isWebAuthnOpen" @logged-in="refresh" />
-	<UploadPanel v-if="canUpload" @refresh="refresh" key="upload_modal" />
-	<ImportFromServer v-if="canUpload" v-model:visible="isImportFromServerOpen" />
-	<ImportFromLink v-if="canUpload" v-model:visible="isImportFromLinkOpen" :parent-id="null" />
-	<DropBox v-if="canUpload" v-model:visible="isImportFromDropboxOpen" :album-id="null" />
-	<AlbumCreateDialog v-if="canUpload" v-model:visible="isCreateAlbumOpen" :parent-id="null" key="create_album_modal" />
-	<AlbumCreateTagDialog v-if="canUpload" v-model:visible="isCreateTagAlbumOpen" key="create_tag_album_modal" />
-	<Toolbar
-		class="w-full border-0 h-14"
-		:pt:root:class="'flex-nowrap relative'"
-		:pt:center:class="'absolute top-0 py-3 left-1/2 -translate-x-1/2 h-14'"
-	>
-		<template #start>
-			<!-- Not logged in. -->
-			<BackLinkButton v-if="props.user.id === null && !isLoginLeft" :config="props.config" />
-			<Button
-				v-if="props.user.id === null && isLoginLeft"
-				icon="pi pi-sign-in"
-				class="border-none"
-				severity="secondary"
-				text
-				@click="lycheeStore.toggleLogin()"
-			/>
-			<!-- Logged in. -->
-			<OpenLeftMenu v-if="user.id" />
-		</template>
 
-		<template #center>
-			<span class="sm:hidden font-bold">
-				{{ $t("lychee.ALBUMS") }}
-			</span>
-			<span class="hidden sm:block font-bold text-sm lg:text-base text-center w-full">{{ props.title }}</span>
-		</template>
 
-		<template #end>
-			<!-- Maybe logged in. -->
-			<div :class="menu.length > 1 ? 'hidden sm:block' : ''">
-				<template v-for="item in menu">
-					<template v-if="item.type === 'link'">
-						<Button as="router-link" :to="item.to" :icon="item.icon" class="border-none" severity="secondary" text />
-					</template>
-					<template v-else>
-						<Button @click="item.callback" :icon="item.icon" class="border-none" severity="secondary" text />
-					</template>
-				</template>
-				<!-- Not logged in. -->
-				<BackLinkButton v-if="props.user.id === null && isLoginLeft" :config="props.config" />
-			</div>
-			<SpeedDial
-				:model="menu"
-				v-if="menu.length > 1"
-				direction="down"
-				class="top-0 mr-4 absolute right-0 sm:hidden"
-				:buttonProps="{ severity: 'help', rounded: true }"
-			>
-				<template #button="{ toggleCallback }">
-					<Button text severity="secondary" class="border-none h-14" @click="toggleCallback" icon="pi pi-angle-double-down" />
-				</template>
-				<template #item="{ item, toggleCallback }">
-					<template v-if="item.type === 'link'">
-						<Button as="router-link" :to="item.to" :icon="item.icon" class="shadow-md shadow-black/25" severity="warn" rounded />
-					</template>
-					<template v-else>
-						<Button @click="item.callback" :icon="item.icon" class="shadow-md shadow-black/25" severity="warn" rounded />
-					</template>
-				</template>
-			</SpeedDial>
-		</template>
-	</Toolbar>
-	<ContextMenu v-if="props.rights.can_upload" ref="addmenu" :model="addMenu">
-		<template #item="{ item, props }">
-			<Divider v-if="item.is_divider" />
-			<a v-else v-ripple v-bind="props.action" @click="item.callback">
-				<span :class="item.icon" />
-				<span class="ml-2">
-					<!-- @vue-ignore -->
-					{{ $t(item.label) }}
-				</span>
-			</a>
-		</template>
-	</ContextMenu>
+
+
+
+
+
+
+album header
+
 </template>
 <script setup lang="ts">
 import Button from "primevue/button";
@@ -95,9 +23,8 @@ import ImportFromServer from "@/components/modals/ImportFromServer.vue";
 import AlbumCreateDialog from "@/components/forms/album/AlbumCreateDialog.vue";
 import AlbumCreateTagDialog from "@/components/forms/album/AlbumCreateTagDialog.vue";
 import { computed, ComputedRef, ref, onBeforeUnmount, onMounted, onUnmounted } from "vue";
-import { onKeyStroke } from "@vueuse/core";
 import { useLycheeStateStore } from "@/stores/LycheeState";
-import { isTouchDevice, shouldIgnoreKeystroke } from "@/utils/keybindings-utils";
+import { isTouchDevice } from "@/utils/keybindings-utils";
 import { storeToRefs } from "pinia";
 import BackLinkButton from "./BackLinkButton.vue";
 import { useContextMenuAlbumsAdd } from "@/composables/contextMenus/contextMenuAlbumsAdd";
@@ -142,14 +69,6 @@ onBeforeUnmount(() => {
 });
 
 
-// 'UPLOAD_PHOTO' => 'Upload Photo',
-// 	'IMPORT_LINK' => 'Import from Link',
-// 	'IMPORT_DROPBOX' => 'Import from Dropbox',
-// 	'IMPORT_SERVER' => 'Import from Server',
-// 	'NEW_ALBUM' => 'New Album',
-// 	'NEW_TAG_ALBUM' => 'New Tag Album',
-// 	'UPLOAD_TRACK' => 'Upload track',
-// 	'DELETE_TRACK' => 'Delete track',
 const lycheeStore = useLycheeStateStore();
 const { is_login_open, dropbox_api_key, is_upload_visible } = storeToRefs(lycheeStore);
 const isWebAuthnOpen = ref(false);
@@ -202,60 +121,7 @@ function openSearch() {
 	router.push({ name: "search" });
 }
 
-onKeyStroke("n", (e) => {
-	console.log('AlbumsHeader - onKeyStroke("n")');
-	if (shouldIgnoreKeystroke()) {
-		return;
-	}
 
-	if (!props.rights.can_upload) {
-		return;
-	}
-
-	e.preventDefault();
-	isCreateAlbumOpen.value = true;
-});
-onKeyStroke("u", () => !shouldIgnoreKeystroke() && props.rights.can_upload && (is_upload_visible.value = true));
-onKeyStroke("l", () => !shouldIgnoreKeystroke() && props.user.id === null && (is_login_open.value = true));
-onKeyStroke("k", () => !shouldIgnoreKeystroke() && props.user.id === null && !isWebAuthnUnavailable.value && (isWebAuthnOpen.value = true));
-onKeyStroke("/", () => !shouldIgnoreKeystroke() && props.config.is_search_accessible && openSearch());
-
-// on key stroke escape:
-// 1. lose focus
-// 2. close modals
-// 3. go back
-onKeyStroke("escape", () => {
-	// 1. lose focus
-	if (document.activeElement instanceof HTMLElement) {
-		document.activeElement.blur();
-		return;
-	}
-
-	// 2. close modals
-	if (is_login_open.value) {
-		is_login_open.value = false;
-		return;
-	}
-
-	if (is_upload_visible.value) {
-		is_upload_visible.value = false;
-		return;
-	}
-	if (isCreateAlbumOpen.value) {
-		isCreateAlbumOpen.value = false;
-		return;
-	}
-	if (isCreateTagAlbumOpen.value) {
-		isCreateTagAlbumOpen.value = false;
-		return;
-	}
-	if (isImportFromServerOpen.value) {
-		isImportFromServerOpen.value = false;
-		return;
-	}
-
-	lycheeStore.left_menu_open = false;
-});
 
 type Link = {
 	type: "link";
